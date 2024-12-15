@@ -35,15 +35,14 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 
 
 # Usage
-Chrome or Firefox are preffered as that is primarily what was used in development testing
-
-Open https://re-frontend.onrender.com/ in your browser
-You should see a Login/Signup page
+- Chrome or Firefox are preffered as that is primarily what was used in development testing
+- Open https://re-frontend.onrender.com/ in your browser
+- You should see a Login/Signup page
 
 1. Login/Signup
-    Signup with a valid email if you do not already have an account
-        * The username must be an email
-        * The password must be at least 8 characters long
+- Signup with a valid email if you do not already have an account
+* The username must be an email
+* The password must be at least 8 characters long
 
     If you already have an account, login with your password
 
