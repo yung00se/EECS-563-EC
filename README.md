@@ -41,8 +41,8 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 
 1. Login/Signup
 - Signup with a valid email if you do not already have an account
-* The username must be an email
-* The password must be at least 8 characters long
+    - The username must be an email
+    - The password must be at least 8 characters long
 
     If you already have an account, login with your password
 
