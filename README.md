@@ -1,5 +1,6 @@
 # Hawk Chat (Instant Messaging)
 Hosted at https://re-frontend.onrender.com/
+Github Repository: https://github.com/yung00se/EECS-563-EC
 
 # Description
 Hawk Chat is an instant messaging client that connects to a central TCP server for instant messaging, and a central Database API for authenticating users as well as storing message history
