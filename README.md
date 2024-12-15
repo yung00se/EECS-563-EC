@@ -56,8 +56,8 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 3. **Login/Signup on Second Client**
 - Repeat steps 1 and 2 for another client
 - The second client **must** be either
-    - a. on a different browser application (i.e. if **Client 1** is in Firefox, **Client 2** must NOT be in Firefox) **or**
-    - b. on a different computer
+    - on a different browser application (i.e. if **Client 1** is in Firefox, **Client 2** must NOT be in Firefox) **or**
+    - on a different computer
 
 4. **Join a Room**
 - If both clients are logged in/signed up, and both clients have hit the **Find a Room** button, they should see each other in the list of available rooms
