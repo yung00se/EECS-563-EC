@@ -104,19 +104,22 @@ You can, however, test the GET-CHAT-HISTORY and ADD-CHAT URLs quite easily
 ### Login
 Checks for user entry in database and authenticate if password is correct
 
-HTTP method: POST
-URL: https://re-backend-s7fz.onrender.com/auth/login
-Request body format:
-    {
-        email: johnsmith@gmail.com,
-        password: (hashed password)
-    }
-
-Response body format:
+- HTTP method: POST
+- URL: https://re-backend-s7fz.onrender.com/auth/login
+- Request body format:
+```json
+{
+    email: johnsmith@gmail.com,
+    password: (hashed password)
+}
+```
+- Response body format:
+```json
 {
     email: johnsmith@gmail.com,
     token: d9d6f9s6DDS9dflm2...q1my
 }
+```
 
 Your raw password is never stored anywhere -- passwords are always hashed before being sent over the internet
 
@@ -125,19 +128,22 @@ Upon successful authentication, the user's email and a temporary json web token 
 ### Signup
 Create a new user entry in the database
 
-HTTP method: POST
-URL: https://re-backend-s7fz.onrender.com/auth/signup
-Request body format:
+- HTTP method: POST
+- URL: https://re-backend-s7fz.onrender.com/auth/signup
+- Request body format:
+```json
 {
     email: johnsmith@gmail.com,
     password: (hashed password)
 }
-
-Response body format:
+```
+- Response body format:
+```json
 {
     email: johnsmith@gmail.com,
     token: d9d6f9s6DDS9dflm2...q1my
 }
+```
 
 Your raw password is never stored anywhere -- passwords are always hashed before being sent over the internet
 
@@ -151,15 +157,18 @@ Upon successful registration, the user's email and a temporary json web token (e
 ### Get chat history
 Gets all chat history for two users
 
-HTTP method: POST
-URL: https://re-backend-s7fz.onrender.com/chat/chat-history
-Request body format:
+- HTTP method: POST
+- URL: https://re-backend-s7fz.onrender.com/chat/chat-history
+- Request body format:
+```json
 {
     sender: "johnsmith",    (@gmail.com ommitted)
     receiver: "janedoe"     (@gmail.com ommitted)
 }
+```
 
-Response body format:
+-Response body format:
+```json
 {
     members: ["johnsmith", "janedoe"]
     messageLog: [
@@ -168,18 +177,22 @@ Response body format:
         "johnsmith: How are you?"
     ]
 }
+```
 
 ### Add chat
-HTTP method: PUT
-URL: https://re-backend-s7fz.onrender.com/chat/send
-Request body format:
+- HTTP method: PUT
+- URL: https://re-backend-s7fz.onrender.com/chat/send
+- Request body format:
+```json
 {
     sender: "janedoe",
     receiver: "johnsmith",
     message: "janedoe: This is a new message"
 }
+```
 
-Response body format (same as chat history response):
+- Response body format (same as chat history response):
+```json
 {
     members: ["johnsmith", "janedoe"]
     messageLog: [
@@ -189,6 +202,8 @@ Response body format (same as chat history response):
         "janedoe: This is a new message"
     ]
 }
+
+```
 
 Note: the member names in "members" array are sorted before checking database -- this means that in the request body, the sender and receiver could be switched, and the response will be the same -- thus, John could send a chat to Jane, or Jane could send a chat to John, and both will be added to the same entry in the database
 
