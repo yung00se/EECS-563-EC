@@ -212,11 +212,14 @@ The server listens on port 4000
 
 ## Arrays for active users
 'usernames' array: stores array of all usernames (strings) currently active
+
 'users' array: stores array of json objects with the following format:
+```json
 {
     username: "johnsmith",
     socket: (Socket object corresponding to John Smith's client app)
 }
+```
 
 ## Socket events
 socket.on('register', (username))
