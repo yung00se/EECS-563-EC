@@ -7,8 +7,8 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 
 # Table of Contents
 - [Description](#description)
-- [How to Use It](#usage)
 - [Overview](#overview)
+- [How to Use It](#usage)
 - [Database API](#database-api)
     - [Authentication](#authentication)
         - [Login](#login)
@@ -33,6 +33,13 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
             - [Send Button](#send-button)
         - [Logout Button](#logout-button)
 
+# Overview
+- This implementation consists of three codebases:
+    - An API that uses HTTP for processing login/signup requests, and for storing/retrieving message history for users using a MongoDB database collection
+    - A TCP server that can relay messages between users quickly and reliably
+    - A static client that can connect to the previously mentioned database API and TCP server
+
+- All code is hosted using Render, a platform for hosting cloud applications
 
 # Usage
 - Chrome or Firefox are preffered as that is primarily what was used in development testing
@@ -57,19 +64,17 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 - Repeat steps 1 and 2 for another client
 - The second client **must** be either
     - on a different browser application (i.e. if **Client 1** is in Firefox, **Client 2** must NOT be in Firefox) **or**
-    - on a different computer
+    - on a different machine
 
 4. **Join a Room**
-- If both clients are logged in/signed up, and both clients have hit the **Find a Room** button, they should see each other in the list of available rooms
-
-- If either (or both) of the clients are not showing the other client, then one or both of the users are not logged in, or there is an error connecting to the TCP server
+- If both clients are logged in/signed up, and both clients have hit the **Find a Room** button, they should see each other in the list of available
 
 - On **Client 1**'s page, click on **Client 2**'s name
 
 - On **Client 2**'s page, click on **Client 1**'s name
 
 5. **Chat**
-- You should now be in the chat room (for both **Client 1** **Client 2**)
+- You should now be in the chat room (for both **Client 1** and **Client 2**)
 - Try sending a message (it does not matter which client instance sends a message first)
 
 - You should see the message you just sent in your message logs, and you should also see the message in the other client's message logs (the message logs should always look identical for both clients)
@@ -86,19 +91,10 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 
 - Upon rejoining, you should see that all of your message history was restored, and you can continue sending messages from where you left off
 
-# Overview
-- This implementation consists of three codebases:
-    - An API that uses HTTP for processing login/signup requests, and for storing/retrieving message history for users using a MongoDB database collection
-    - A TCP server that can relay messages between users quickly and reliably
-    - A static client that can connect to the previously mentioned database API and TCP server
-
-- All code is hosted using Render, a platform for hosting cloud applications
-
 # Database API
-- HTTP requests to the database API can be tested at any time using POSTMAN or similar software
-- Note:
-    - While it is technically possible to test LOGIN and SIGNUP URLs in Postman, it is not practical, as you would need to include the hashed password in both cases
-    - You can, however, test the GET-CHAT-HISTORY and ADD-CHAT URLs quite easily (see [Get Chat History](#get-chat-history) and [Add Chat](#add-chat))
+- HTTP requests to the database API can be tested at any time using Postman or similar software
+- Make sure to correctly format the JSON in the request body, or you will not get a successful response
+- See the proper formatting for each request below under [Authentication](#authentication)
 
 
 ## Authentication
@@ -110,19 +106,19 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 - Request body format:
 ```json
 {
-    email: johnsmith@gmail.com,
-    password: (hashed password)
+    "email": "johnsmith@email.com",
+    "password": "password123"
 }
 ```
 - Response body format:
 ```json
 {
-    email: johnsmith@gmail.com,
-    token: d9d6f9s6DDS9dflm2...q1my
+    "email": "johnsmith@email.com",
+    "token": "d9d6f9s6D.......q1my"
 }
 ```
 
-- **Your raw password is never stored anywhere -- passwords are always hashed before being sent over the internet**
+- **Your raw password is never stored anywhere -- passwords are always hashed before being stored in the database**
 
 - Upon successful authentication, the user's email and a temporary json web token (expires after 30 minutes) is stored in LocalStorage
 
@@ -134,19 +130,19 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 - Request body format:
 ```json
 {
-    email: johnsmith@gmail.com,
-    password: (hashed password)
+    "email": "johnsmith@email.com",
+    "password": "password123"
 }
 ```
 - Response body format:
 ```json
 {
-    email: johnsmith@gmail.com,
-    token: d9d6f9s6DDS9dflm2...q1my
+    "email": "johnsmith@email.com",
+    "token": "d9d6f9s6DDS9dflm2...q1my"
 }
 ```
 
-- **Your raw password is never stored anywhere -- passwords are always hashed before being sent over the internet**
+- **Your raw password is never stored anywhere -- passwords are always hashed before being stored in the database**
 
 - **Username must be an email**
 
@@ -161,24 +157,24 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 - HTTP method: POST
 - URL: https://re-backend-s7fz.onrender.com/chat/chat-history
 - Request body format:
-```json
-{
-    sender: "johnsmith",    (@gmail.com ommitted)
-    receiver: "janedoe"     (@gmail.com ommitted)
-}
-```
-
--Response body format:
-```json
-{
-    members: ["johnsmith", "janedoe"]
-    messageLog: [
-        "johnsmith: Hey Jane",
-        "janedoe: Hi John",
-        "johnsmith: How are you?"
-    ]
-}
-```
+    ```json
+    {
+        "sender": "johnsmith",
+        "receiver": "janedoe"
+    }
+    ```
+    - Note that the ending tag of the email is not included (johnsmith@email.com -> johnsmith)
+- Response body format:
+    ```json
+    {
+        "members": ["johnsmith", "janedoe"]
+        "messageLog": [
+            "johnsmith: Hey Jane",
+            "janedoe: Hi John",
+            "johnsmith: How are you?"
+        ]
+    }
+    ```
 
 ### Add chat
 - HTTP method: PUT
@@ -186,17 +182,17 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 - Request body format:
 ```json
 {
-    sender: "janedoe",
-    receiver: "johnsmith",
-    message: "janedoe: This is a new message"
+    "sender": "janedoe",
+    "receiver": "johnsmith",
+    "message": "janedoe: This is a new message"
 }
 ```
 
 - Response body format (same as chat history response):
 ```json
 {
-    members: ["johnsmith", "janedoe"]
-    messageLog: [
+    "members": ["johnsmith", "janedoe"]
+    "messageLog": [
         "johnsmith: Hey Jane",
         "janedoe: Hi John",
         "johnsmith: How are you?",
@@ -220,30 +216,30 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 - The **users** array stores an array of json objects with the following format:
 ```json
 {
-    username: "johnsmith",
-    socket: (Socket object corresponding to John Smith's client app)
+    "username": "johnsmith",
+    "socket": "(Socket object corresponding to John Smith's client app)"
 }
 ```
 
 ## Socket events
-- socket.on('register', (username))
+- socket.on(**'register'**, (username))
     - the client would like to register their username in the server
 
-- socket.on('get-current-users', ())
+- socket.on(**'get-current-users'**, ())
     - the client is requesting that the server send a list of all active clients
 
-- socket.on('message', data)
+- socket.on(**'message'**, data)
     - the client has a message that it would like the server to send to the designated user
     - the **data** variable has the following format:
     ```json
     {
-        sender: "johnsmith",
-        receiver: "janedoe",
-        msg: "What's up?"
+        "sender": "johnsmith",
+        "receiver": "janedoe",
+        "msg": "What's up?"
     }
     ```
 
-- socket.on('DC', user)
+- socket.on(**'DC'**, user)
     - the client is disconnecting, so it needs the server to remove it from the active users list
 
 # Hawk Chat Client
