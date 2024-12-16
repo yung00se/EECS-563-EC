@@ -47,11 +47,13 @@
 - You should see a Login/Signup page
 
 1. **Login/Signup**
-- Signup with a valid email if you do not already have an account
-    - The username must be an email
+- If you already have an account, login with your password
+- If you do not already have an account, Signup with a valid email and password
+    - The email field must be an email
     - The password must be at least 8 characters long
 
-- If you already have an account, login with your password
+- **Note: The Database API tends to slow down the less it is used, so logging in/signing may take a minute or so**
+    - **If the API has not responded after a minute or so, return to the homepage and try logging in (DO NOT SIGN UP WITH THE SAME INFORMATION AGAIN)**
 
 - **Passwords are stored securely -- click on the following to see how the Database API processes Login and Signup requests: [Authentication](#authentication)**
 

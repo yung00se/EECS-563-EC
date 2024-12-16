@@ -28,11 +28,14 @@ io.on('connection', socket => {
 
     // when a client sends a 'register' message to the server, this means the client wants to register a username to the server
     socket.on('register', username => {
+      //console.log('before register', usernames)
       // if the client is not already in the user list, add their name to the usernames array, then add their username and socket connection to the users array
-      if (username in usernames === false) {
+      if (!usernames.includes(username)) {
         usernames.push(username)
         users.push({username: username, socket: socket})
-      //console.log('registered user', username)
+        io.emit('current-users', usernames)
+        //console.log('registered user', username)
+        //console.log('after register', usernames)
       }
     })
 
@@ -60,19 +63,20 @@ io.on('connection', socket => {
         }
       })
     })
-
     // when a client sends a 'DC' message, this means they need to disconnect from the server
     // I use a custom disconnect function rather than the built-in disconnect function here, since the custom function allows the username to be passed
     socket.on('DC', user => {
-      //console.log('disconnecting', user)
-      // filter the disconnecting user out of the users array
-      users = users.filter(data => {
-        data['username'] !== user
-      })
-      // filter the disconnecting user out of the usernames array
-      usernames = usernames.filter(name => {
-        name !== user
-      })
+      //console.log('before', usernames)
+      // iterate through users and usernames, and remove the disconnecting user from both
+      for (let i = 0; i < usernames.length; i++) {
+        if (usernames[i] == user) {
+          users.splice(i, 1)
+          usernames.splice(i, 1)
+        }
+      }
+      //console.log('after', usernames)
+
+      io.emit('current-users', usernames)
     })
 })
 
