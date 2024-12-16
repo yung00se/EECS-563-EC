@@ -27,7 +27,7 @@
     - [Login Page](#login-page)
     - [Signup Page](#signup-page)
     - [Chats Page (3 possible modes)](#chats-page)
-        - [Find a Room Page](#find-a-room)
+        - [Establish TCP Connection](#establish-tcp-connection)
         - [Lobby](#lobby)
         - [Chatroom](#chatroom)
             - [Send Button](#send-button)
@@ -167,7 +167,7 @@
 - Response body format:
     ```json
     {
-        "members": ["johnsmith", "janedoe"]
+        "members": ["janedoe", "johnsmith"]
         "messageLog": [
             "johnsmith: Hey Jane",
             "janedoe: Hi John",
@@ -191,7 +191,7 @@
 - Response body format (same as chat history response):
 ```json
 {
-    "members": ["johnsmith", "janedoe"]
+    "members": ["janedoe", "johnsmith"]
     "messageLog": [
         "johnsmith: Hey Jane",
         "janedoe: Hi John",
@@ -203,7 +203,7 @@
 ```
 
 - Note:
-    - The member names in the **members** array are sorted before checking database 
+    - The member names in the **members** field are sorted before checking database 
     - this means that in the request body, the sender and receiver could be switched, and **the response will be the same**
     - **thus, John could send a chat to Jane, or Jane could send a chat to John, and both will be added to the same entry in the database**
 
@@ -262,7 +262,7 @@
 
 ## Chats page
 ### Three Possible Modes:
-#### Find a Room
+#### Establish TCP Connection
 - Displays this page when client's socket is null
 
 - **Find a Room** button
