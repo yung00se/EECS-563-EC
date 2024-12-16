@@ -52,7 +52,7 @@
     - The email field must be an email
     - The password must be at least 8 characters long
 
-- **Note: The Database API tends to slow down the less it is used, so logging in/signing may take a minute or so**
+- **Note: The Database API tends to slow down the less it is used, so logging in/signing up may take a minute or so**
     - **If the API has not responded after a minute or so, return to the homepage and try logging in (DO NOT SIGN UP WITH THE SAME INFORMATION AGAIN)**
 
 - **Passwords are stored securely -- click on the following to see how the Database API processes Login and Signup requests: [Authentication](#authentication)**
