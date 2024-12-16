@@ -1,9 +1,9 @@
 # Hawk Chat (Instant Messaging)
-Hosted at https://re-frontend.onrender.com/
-Github Repository: https://github.com/yung00se/EECS-563-EC
+- Hosted at https://re-frontend.onrender.com/
+- Github Repository: https://github.com/yung00se/EECS-563-EC
 
 # Description
-Hawk Chat is an instant messaging client that connects to a central TCP server for instant messaging, and a central Database API for authenticating users as well as storing message history
+- Hawk Chat is an instant messaging client that connects to a central TCP server for instant messaging, and a central Database API for authenticating users as well as storing message history
 
 # Table of Contents
 - [Description](#description)
@@ -81,7 +81,7 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 
 - Send a few messages back and forth to make sure it works
 
-6. Test the **Restore Chat History** functionality
+6. Test the [Get Chat History](#get-chat-history) functionality
 - Now, try logging out of both clients
     - this removes all local variables and deletes the user's information from LocalStorage (but not from the database!)
 
@@ -138,7 +138,7 @@ Hawk Chat is an instant messaging client that connects to a central TCP server f
 ```json
 {
     "email": "johnsmith@email.com",
-    "token": "d9d6f9s6DDS9dflm2...q1my"
+    "token": "d9d6f9s6D.......q1my"
 }
 ```
 
